@@ -66,7 +66,7 @@ class TargetPosTask(object, metaclass=TargetPosTaskSingleton):
         """
         super(TargetPosTask, self).__init__()
         self._api = api
-        if symbol not in api._data.get("quotes", {}):
+        if (not self._api._stock) and symbol not in api._data.get("quotes", {}):
             raise Exception("代码 %s 不存在, 请检查合约代码是否填写正确" % (symbol))
         self._symbol = symbol
         self._exchange = symbol.split(".")[0]
@@ -228,7 +228,7 @@ class InsertOrderUntilAllTradedTask(object):
             trade_chan (TqChan): [可选]成交通知channel, 当有成交发生时会将成交手数(多头为正数，空头为负数)发到该channel上
         """
         self._api = api
-        if symbol not in api._data.get("quotes", {}):
+        if (not self._api._stock) and symbol not in api._data.get("quotes", {}):
             raise Exception("代码 %s 不存在, 请检查合约代码是否填写正确" % (symbol))
         self._symbol = symbol
         if direction not in ("BUY", "SELL"):
@@ -324,7 +324,7 @@ class InsertOrderTask(object):
             trade_chan (TqChan): [可选]成交通知channel, 当有成交发生时会将成交手数(多头为正数，空头为负数)发到该channel上
         """
         self._api = api
-        if symbol not in api._data.get("quotes", {}):
+        if (not self._api._stock) and symbol not in api._data.get("quotes", {}):
             raise Exception("代码 %s 不存在, 请检查合约代码是否填写正确" % (symbol))
         self._symbol = symbol
         if direction not in ("BUY", "SELL"):
